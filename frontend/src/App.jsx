@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Home from './pages/Home'
 import Teams from './pages/Teams'
+import TeamDetails from './pages/TeamDetails'
 import { teams as dummyTeams } from './data/dummy'
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/teams" element={<Teams teams={teams} setTeams={setTeams} />} />
+        <Route path="/teams/:id" element={<TeamDetails teams={teams} setTeams={setTeams} />} />
       </Routes>
     </div>
   )

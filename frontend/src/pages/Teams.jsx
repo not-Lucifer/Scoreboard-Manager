@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 function Teams({ teams, setTeams }) {
   const [name, setName] = useState('')
@@ -30,7 +31,7 @@ function Teams({ teams, setTeams }) {
       <ul>
         {teams.map((t) => (
           <li key={t.id}>
-            {t.name} ({t.shortName}) - {t.players.length} players{' '}
+            <Link to={`/teams/${t.id}`}>{t.name}</Link> ({t.shortName}) - {t.players.length} players{' '}
             <button onClick={() => deleteTeam(t.id)}>delete</button>
           </li>
         ))}
