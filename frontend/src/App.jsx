@@ -9,6 +9,7 @@ import Scoreboard from './pages/Scoreboard'
 import Leaderboard from './pages/Leaderboard'
 import Login from './pages/Login'
 import Register from './pages/Register'
+import NotFound from './pages/NotFound'
 import { teams as dummyTeams, matches as dummyMatches } from './data/dummy'
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
         <Route path="/leaderboard" element={<Leaderboard teams={teams} matches={matches} />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
   )
