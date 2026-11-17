@@ -15,7 +15,7 @@ function App() {
       <hr />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/teams" element={<Teams teams={teams} />} />
+        <Route path="/teams" element={<Teams teams={teams} setTeams={setTeams} />} />
       </Routes>
     </div>
   )
