@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 function Matches({ teams, matches, setMatches }) {
   const [teamA, setTeamA] = useState('')
@@ -50,7 +51,8 @@ function Matches({ teams, matches, setMatches }) {
       <ul>
         {matches.map((m) => (
           <li key={m.id}>
-            {teamName(m.teamA)} vs {teamName(m.teamB)} - {m.scoreA} : {m.scoreB} ({m.status}) {m.date}
+            {teamName(m.teamA)} vs {teamName(m.teamB)} - {m.scoreA} : {m.scoreB} ({m.status}) {m.date}{' '}
+            <Link to={`/matches/${m.id}`}>open</Link>
           </li>
         ))}
       </ul>
