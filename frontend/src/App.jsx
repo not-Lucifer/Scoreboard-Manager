@@ -4,10 +4,12 @@ import Navbar from './components/Navbar'
 import Home from './pages/Home'
 import Teams from './pages/Teams'
 import TeamDetails from './pages/TeamDetails'
-import { teams as dummyTeams } from './data/dummy'
+import Matches from './pages/Matches'
+import { teams as dummyTeams, matches as dummyMatches } from './data/dummy'
 
 function App() {
   const [teams, setTeams] = useState(dummyTeams)
+  const [matches, setMatches] = useState(dummyMatches)
 
   return (
     <div>
@@ -18,6 +20,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/teams" element={<Teams teams={teams} setTeams={setTeams} />} />
         <Route path="/teams/:id" element={<TeamDetails teams={teams} setTeams={setTeams} />} />
+        <Route path="/matches" element={<Matches teams={teams} matches={matches} />} />
       </Routes>
     </div>
   )
