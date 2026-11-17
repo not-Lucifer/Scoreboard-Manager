@@ -7,6 +7,8 @@ import TeamDetails from './pages/TeamDetails'
 import Matches from './pages/Matches'
 import Scoreboard from './pages/Scoreboard'
 import Leaderboard from './pages/Leaderboard'
+import Login from './pages/Login'
+import Register from './pages/Register'
 import { teams as dummyTeams, matches as dummyMatches } from './data/dummy'
 
 function App() {
@@ -25,6 +27,8 @@ function App() {
         <Route path="/matches" element={<Matches teams={teams} matches={matches} setMatches={setMatches} />} />
         <Route path="/matches/:id" element={<Scoreboard teams={teams} matches={matches} setMatches={setMatches} />} />
         <Route path="/leaderboard" element={<Leaderboard teams={teams} matches={matches} />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
     </div>
   )
