@@ -30,6 +30,7 @@ function CricketScore({ match, teams, updateMatch }) {
   const nonStriker = match.nonStriker || ''
   const bowler = match.bowler || ''
   const lastBowler = match.lastBowler || ''
+  const freeHit = !!match.freeHit
 
   const outs = match.log.filter((b) => b.innings === match.innings && b.wicket).map((b) => b.out || b.batter)
   const nextBatters = (batTeam?.players || []).filter((p) => !outs.includes(p) && p !== striker && p !== nonStriker)
@@ -39,6 +40,7 @@ function CricketScore({ match, teams, updateMatch }) {
   function addBall(runs, how = '', outName = '') {
     if (!striker || !nonStriker || !bowler) return alert('select striker, non striker and bowler')
 
+    if (how === 'out' && freeHit) return alert('free hit - only run out allowed')
     const isWicket = how !== ''
     const ex = how === 'out' ? '' : extra
     const legal = ex !== 'wide' && ex !== 'no ball'
@@ -73,6 +75,10 @@ function CricketScore({ match, teams, updateMatch }) {
     changes.striker = st
     changes.nonStriker = ns
 
+    // no ball -> next ball free hit, wide keeps it
+    if (ex === 'no ball') changes.freeHit = true
+    else if (ex !== 'wide') changes.freeHit = false
+
     const allOut = newScore.wickets >= 10
     const oversDone = newScore.balls >= match.overs * 6
     const chased = match.innings === 2 && newScore.runs >= target
@@ -82,6 +88,7 @@ function CricketScore({ match, teams, updateMatch }) {
       changes.nonStriker = ''
       changes.bowler = ''
       changes.lastBowler = ''
+      changes.freeHit = false
       if (match.innings === 1) {
         changes.innings = 2
         alert(`innings over, target ${newScore.runs + 1}`)
@@ -132,6 +139,7 @@ function CricketScore({ match, teams, updateMatch }) {
             Bowler: {bowler || pick(bowlers, 'bowler')}
             {lastBowler && ` (last over: ${lastBowler})`}
           </p>
+          {freeHit && <p>FREE HIT</p>}
           <p>
             Extra:{' '}
             <select value={extra} onChange={(e) => setExtra(e.target.value)}>
