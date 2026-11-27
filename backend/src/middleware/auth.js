@@ -16,8 +16,11 @@ export async function protect(req, res, next) {
   }
 }
 
-// only run protect on POST / PUT / DELETE, GET stays public
+// GET stays public, POST / PUT / DELETE only for admin
 export function protectWrites(req, res, next) {
   if (req.method === 'GET') return next()
-  return protect(req, res, next)
+  return protect(req, res, () => {
+    if (req.user.role !== 'admin') return res.status(403).json({ message: 'only admin can make changes' })
+    next()
+  })
 }

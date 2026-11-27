@@ -66,9 +66,15 @@ function App() {
   }
 
   function canEdit() {
-    if (user) return true
-    alert('login first to make changes')
-    return false
+    if (!user) {
+      alert('login first to make changes')
+      return false
+    }
+    if (user.role !== 'admin') {
+      alert('only admin can make changes')
+      return false
+    }
+    return true
   }
 
   function setTeams(newList) {

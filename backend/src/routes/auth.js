@@ -17,8 +17,8 @@ router.post('/register', async (req, res) => {
   if (password.length < 6) return res.status(400).json({ message: 'password must be at least 6 characters' })
   if (await User.exists({ email: email.toLowerCase() })) return res.status(400).json({ message: 'email already registered' })
 
-  // first user is admin
-  const role = (await User.countDocuments()) === 0 ? 'admin' : 'scorer'
+  // first user is admin, rest are students (view only)
+  const role = (await User.countDocuments()) === 0 ? 'admin' : 'student'
   const user = await User.create({ name, email, password: await bcrypt.hash(password, 10), role })
   sendToken(res, user, 201)
 })
