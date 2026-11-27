@@ -28,6 +28,15 @@ function FootballScore({ match, teams, updateMatch }) {
     setPlayer('')
   }
 
+  function deleteEvent(ev) {
+    const changes = { events: match.events.filter((x) => x.id !== ev.id) }
+    if (goalTypes.includes(ev.type)) {
+      if (ev.teamId === match.teamA) changes.scoreA = match.scoreA - 1
+      else changes.scoreB = match.scoreB - 1
+    }
+    updateMatch(changes)
+  }
+
   return (
     <div>
       {match.status === 'live' && (
@@ -59,6 +68,7 @@ function FootballScore({ match, teams, updateMatch }) {
         {sorted.map((ev) => (
           <li key={ev.id}>
             {ev.minute}' {ev.type} - {ev.player} ({teamName(ev.teamId)})
+            {match.status === 'live' && <button onClick={() => deleteEvent(ev)}>x</button>}
           </li>
         ))}
       </ul>
