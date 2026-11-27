@@ -34,7 +34,11 @@ function CricketScore({ match, teams, updateMatch }) {
 
   const outs = match.log.filter((b) => b.innings === match.innings && b.wicket).map((b) => b.out || b.batter)
   const nextBatters = (batTeam?.players || []).filter((p) => !outs.includes(p) && p !== striker && p !== nonStriker)
-  const bowlers = (bowlTeam?.players || []).filter((p) => p !== lastBowler)
+  // max overs per bowler (T20 = 4)
+  const maxOvers = Math.ceil(match.overs / 5)
+  const ballsBowled = (p) =>
+    match.log.filter((b) => b.innings === match.innings && b.bowler === p && b.extra !== 'wide' && b.extra !== 'no ball').length
+  const bowlers = (bowlTeam?.players || []).filter((p) => p !== lastBowler && ballsBowled(p) < maxOvers * 6)
 
   // how = '' (no wicket), 'out' (striker out) or 'run out'
   function addBall(runs, how = '', outName = '') {
@@ -138,6 +142,7 @@ function CricketScore({ match, teams, updateMatch }) {
           <p>
             Bowler: {bowler || pick(bowlers, 'bowler')}
             {lastBowler && ` (last over: ${lastBowler})`}
+            {` | max ${maxOvers} overs each`}
           </p>
           {freeHit && <p>FREE HIT</p>}
           <p>
