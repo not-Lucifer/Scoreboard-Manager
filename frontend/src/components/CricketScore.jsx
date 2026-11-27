@@ -4,6 +4,8 @@ import { overs } from '../utils'
 function ballText(b) {
   if (b.wicket) return 'OUT'
   if (b.extra === 'wide') return 'wide' + (b.runs ? ' +' + b.runs : '')
+  if (b.extra === 'no ball') return 'no ball' + (b.runs ? ' +' + b.runs : '')
+  if (b.extra) return b.runs + ' ' + b.extra
   return b.runs + ' run'
 }
 
@@ -116,6 +118,9 @@ function CricketScore({ match, teams, updateMatch }) {
             <select value={extra} onChange={(e) => setExtra(e.target.value)}>
               <option value="">none</option>
               <option value="wide">wide</option>
+              <option value="no ball">no ball</option>
+              <option value="bye">bye</option>
+              <option value="leg bye">leg bye</option>
             </select>
             {' '}Runs:{' '}
             {[0, 1, 2, 3, 4, 6].map((r) => (
