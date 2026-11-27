@@ -57,7 +57,19 @@ function CricketScore({ match, teams, updateMatch }) {
     }
 
     const out = how === 'out' ? striker : outName
-    const ball = { innings: match.innings, over: overs(newScore.balls), batter: striker, bowler, runs, extra: ex, wicket: isWicket, how, out }
+    // state before this ball, for undo
+    const prev = {
+      scoreA: match.scoreA,
+      scoreB: match.scoreB,
+      striker,
+      nonStriker,
+      bowler,
+      lastBowler,
+      innings: match.innings,
+      status: match.status,
+      freeHit,
+    }
+    const ball = { innings: match.innings, over: overs(newScore.balls), batter: striker, bowler, runs, extra: ex, wicket: isWicket, how, out, prev }
     const changes = { [batSide]: newScore, log: [ball, ...match.log] }
 
     // strike change on odd runs
@@ -98,12 +110,21 @@ function CricketScore({ match, teams, updateMatch }) {
         alert(`innings over, target ${newScore.runs + 1}`)
       } else {
         changes.status = 'finished'
+        ball.endedMatch = true
         alert('match over')
       }
     }
 
     setExtra('')
     updateMatch(changes)
+  }
+
+  // only if match is live or last ball ended it
+  const canUndo = match.log[0]?.prev && (match.status === 'live' || match.log[0].endedMatch)
+
+  function undo() {
+    updateMatch({ ...match.log[0].prev, log: match.log.slice(1) })
+    setExtra('')
   }
 
   function runOut() {
@@ -177,6 +198,8 @@ function CricketScore({ match, teams, updateMatch }) {
           </p>
         </div>
       )}
+
+      {canUndo && <button onClick={undo}>undo last ball</button>}
 
       {match.log.length === 0 && <p>no ball by ball data</p>}
       <Scorecard match={match} innings={1} teamName={match.innings === 1 ? batTeam?.name : bowlTeam?.name} />
