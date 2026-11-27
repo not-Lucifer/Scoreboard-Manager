@@ -42,6 +42,8 @@ function FootballScore({ match, teams, updateMatch }) {
     e.preventDefault()
     if (!minute || !teamId || !player) return alert('fill minute, team and player')
     if (type === 'substitution' && !playerIn) return alert('select player coming in')
+    const subsDone = match.events.filter((ev) => ev.type === 'substitution' && ev.teamId === Number(teamId)).length
+    if (type === 'substitution' && subsDone >= 5) return alert('max 5 subs allowed')
 
     const ev = { id: match.events.length + 1, minute: Number(minute), type, teamId: Number(teamId), player }
     if (type === 'substitution') ev.playerIn = playerIn
