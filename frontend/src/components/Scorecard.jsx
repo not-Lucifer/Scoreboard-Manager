@@ -56,7 +56,7 @@ function Scorecard({ match, innings, teamName }) {
     <div>
       <h3>Innings {innings} - {teamName}</h3>
       <div className="overflow-x-auto">
-      <table className="[&_td:not(:first-child)]:text-right [&_th:not(:first-child)]:text-right">
+      <table className="[&_td:not(:first-child)]:text-right [&_th:not(:first-child)]:w-16 [&_th:not(:first-child)]:text-right">
         <thead>
           <tr>
             <th>Batter</th>
@@ -77,7 +77,7 @@ function Scorecard({ match, innings, teamName }) {
               <td>{b.fours}</td>
               <td>{b.sixes}</td>
               <td>{b.balls ? ((b.runs / b.balls) * 100).toFixed(1) : '-'}</td>
-              <td className="text-muted">{b.out ? 'out' : 'not out'}</td>
+              <td className="whitespace-nowrap text-muted">{b.out ? 'out' : 'not out'}</td>
             </tr>
           ))}
         </tbody>
@@ -86,7 +86,7 @@ function Scorecard({ match, innings, teamName }) {
       <p className="text-sm text-muted">Extras: {extras} | Total: {total}</p>
 
       <div className="overflow-x-auto">
-      <table className="mt-4 [&_td:not(:first-child)]:text-right [&_th:not(:first-child)]:text-right">
+      <table className="mt-4 [&_td:not(:first-child)]:text-right [&_th:not(:first-child)]:w-16 [&_th:not(:first-child)]:text-right">
         <thead>
           <tr>
             <th>Bowler</th>

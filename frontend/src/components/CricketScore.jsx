@@ -3,7 +3,7 @@ import { overs } from '../utils'
 import Scorecard from './Scorecard'
 
 function ballText(b) {
-  let t = b.runs + ' run'
+  let t = b.runs + (b.runs === 1 ? ' run' : ' runs')
   if (b.extra === 'wide') t = 'wide' + (b.runs ? ' +' + b.runs : '')
   else if (b.extra === 'no ball') t = 'no ball' + (b.runs ? ' +' + b.runs : '')
   else if (b.extra) t = b.runs + ' ' + b.extra
@@ -154,7 +154,7 @@ function CricketScore({ match, teams, updateMatch }) {
       )}
 
       {match.status === 'live' && (
-        <div className="panel mt-6 space-y-4 [&>p]:m-0 [&>p]:flex [&>p]:flex-wrap [&>p]:items-center [&>p]:gap-2">
+        <div className="panel mt-6 flex flex-col gap-4 [&>p]:m-0 [&>p]:flex [&>p]:flex-wrap [&>p]:items-center [&>p]:gap-2">
           <p>
             Striker: {striker ? striker + ' *' : pick(nextBatters, 'striker')}
             {' | '}Non striker: {nonStriker || pick(nextBatters, 'nonStriker')}
@@ -163,7 +163,7 @@ function CricketScore({ match, teams, updateMatch }) {
           <p>
             Bowler: {bowler || pick(bowlers, 'bowler')}
             {lastBowler && ` (last over: ${lastBowler})`}
-            <span className="text-sm text-muted">{` | max ${maxOvers} overs each`}</span>
+            <span className="text-sm text-muted">{`max ${maxOvers} overs each`}</span>
           </p>
           {freeHit && (
             <p>
