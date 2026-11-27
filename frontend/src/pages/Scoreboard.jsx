@@ -1,4 +1,5 @@
 import { useParams, Link } from 'react-router-dom'
+import { scoreText } from '../utils'
 
 function Scoreboard({ teams, matches, setMatches }) {
   const { id } = useParams()
@@ -17,9 +18,9 @@ function Scoreboard({ teams, matches, setMatches }) {
       <Link to="/matches">back</Link>
       <h2>{teamName(match.teamA)} vs {teamName(match.teamB)}</h2>
       <p>Status: {match.status}</p>
-      <h1>{match.scoreA} - {match.scoreB}</h1>
+      <h1>{scoreText(match)}</h1>
 
-      {match.status === 'live' && (
+      {match.status === 'live' && match.sport === 'football' && (
         <div>
           <p>
             {teamName(match.teamA)}{' '}
