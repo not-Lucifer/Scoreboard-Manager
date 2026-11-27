@@ -1,6 +1,7 @@
 import { useParams, Link } from 'react-router-dom'
 import { scoreText } from '../utils'
 import CricketScore from '../components/CricketScore'
+import FootballScore from '../components/FootballScore'
 
 function Scoreboard({ teams, matches, setMatches }) {
   const { id } = useParams()
@@ -21,21 +22,7 @@ function Scoreboard({ teams, matches, setMatches }) {
       <p>{match.sport} | Status: {match.status}</p>
       <h1>{scoreText(match)}</h1>
 
-      {match.status === 'live' && match.sport === 'football' && (
-        <div>
-          <p>
-            {teamName(match.teamA)}{' '}
-            <button onClick={() => updateMatch({ scoreA: match.scoreA + 1 })}>+1</button>
-            <button onClick={() => updateMatch({ scoreA: Math.max(0, match.scoreA - 1) })}>-1</button>
-          </p>
-          <p>
-            {teamName(match.teamB)}{' '}
-            <button onClick={() => updateMatch({ scoreB: match.scoreB + 1 })}>+1</button>
-            <button onClick={() => updateMatch({ scoreB: Math.max(0, match.scoreB - 1) })}>-1</button>
-          </p>
-        </div>
-      )}
-
+      {match.sport === 'football' && <FootballScore match={match} teams={teams} updateMatch={updateMatch} />}
       {match.sport === 'cricket' && <CricketScore match={match} teams={teams} updateMatch={updateMatch} />}
 
       {match.status === 'upcoming' && <button onClick={() => updateMatch({ status: 'live' })}>Start Match</button>}

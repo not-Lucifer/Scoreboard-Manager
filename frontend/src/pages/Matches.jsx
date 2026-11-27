@@ -40,6 +40,7 @@ function Matches({ teams, matches, setMatches, leagues }) {
       scoreB: 0,
       status: 'upcoming',
       date,
+      events: [],
     }
 
     if (isCricket) {
