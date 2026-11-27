@@ -23,12 +23,14 @@ router.post('/register', async (req, res) => {
   sendToken(res, user, 201)
 })
 
+// login with email or username
 router.post('/login', async (req, res) => {
-  const { email, password } = req.body
-  if (!email || !password) return res.status(400).json({ message: 'email and password required' })
-  const user = await User.findOne({ email: email.toLowerCase() })
+  const { password } = req.body
+  const login = (req.body.username || req.body.email || '').toLowerCase().trim()
+  if (!login || !password) return res.status(400).json({ message: 'username / email and password required' })
+  const user = await User.findOne({ $or: [{ email: login }, { username: login }] })
   if (!user || !(await bcrypt.compare(password, user.password))) {
-    return res.status(401).json({ message: 'wrong email or password' })
+    return res.status(401).json({ message: 'wrong username / email or password' })
   }
   sendToken(res, user)
 })

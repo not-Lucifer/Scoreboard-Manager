@@ -25,7 +25,7 @@ function Login({ setUser }) {
     <div className="max-w-sm">
       <h2>Login</h2>
       <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-        <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+        <input placeholder="Username or email" value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="username" />
         <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
         <button type="submit" className="btn-primary">Log in</button>
       </form>
