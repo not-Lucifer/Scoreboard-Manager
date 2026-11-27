@@ -4,7 +4,7 @@ Full stack app to manage teams, matches and live scores for multiple sports.
 Right now: **football** and **cricket**.
 
 ## Tech
-- Frontend: React + Vite
+- Frontend: React + Vite + Tailwind CSS (minimal theme, Archivo font)
 - Backend: coming soon
 
 ## Run frontend
