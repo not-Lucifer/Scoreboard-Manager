@@ -1,15 +1,24 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { api, saveLogin } from '../api'
 
-function Login() {
+function Login({ setUser }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const navigate = useNavigate()
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
-    // TODO: call backend login api
-    console.log(email, password)
-    alert('backend not ready yet')
+    setError('')
+    try {
+      const data = await api.post('/auth/login', { email, password })
+      saveLogin(data)
+      setUser(data.user)
+      navigate('/')
+    } catch (err) {
+      setError(err.message)
+    }
   }
 
   return (
@@ -20,6 +29,7 @@ function Login() {
         <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
         <button type="submit" className="btn-primary">Log in</button>
       </form>
+      {error && <p className="text-sm text-live">{error}</p>}
       <p className="mt-6 text-sm text-muted">
         No account? <Link to="/register">Register</Link>
       </p>
