@@ -10,7 +10,7 @@ import Leaderboard from './pages/Leaderboard'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import NotFound from './pages/NotFound'
-import { teams as dummyTeams, matches as dummyMatches } from './data/dummy'
+import { leagues, teams as dummyTeams, matches as dummyMatches } from './data/dummy'
 
 function App() {
   const [teams, setTeams] = useState(dummyTeams)
@@ -23,8 +23,8 @@ function App() {
       <hr />
       <Routes>
         <Route path="/" element={<Home teams={teams} matches={matches} />} />
-        <Route path="/teams" element={<Teams teams={teams} setTeams={setTeams} />} />
-        <Route path="/teams/:id" element={<TeamDetails teams={teams} setTeams={setTeams} />} />
+        <Route path="/teams" element={<Teams teams={teams} setTeams={setTeams} leagues={leagues} />} />
+        <Route path="/teams/:id" element={<TeamDetails teams={teams} setTeams={setTeams} leagues={leagues} />} />
         <Route path="/matches" element={<Matches teams={teams} matches={matches} setMatches={setMatches} />} />
         <Route path="/matches/:id" element={<Scoreboard teams={teams} matches={matches} setMatches={setMatches} />} />
         <Route path="/leaderboard" element={<Leaderboard teams={teams} matches={matches} />} />
