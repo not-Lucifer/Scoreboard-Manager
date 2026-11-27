@@ -6,17 +6,50 @@ export const leagues = [
 ]
 
 export const teams = [
-  { id: 1, name: 'FC Barcelona', shortName: 'FCB', sport: 'football', leagueId: 1, players: ['Robert Lewandowski', 'Pedri', 'Lamine Yamal'] },
-  { id: 2, name: 'Real Madrid', shortName: 'RMA', sport: 'football', leagueId: 1, players: ['Kylian Mbappe', 'Vinicius Jr', 'Jude Bellingham'] },
-  { id: 3, name: 'Atletico Madrid', shortName: 'ATM', sport: 'football', leagueId: 1, players: ['Julian Alvarez', 'Jan Oblak', 'Koke'] },
-  { id: 4, name: 'Manchester United', shortName: 'MUN', sport: 'football', leagueId: 2, players: ['Bruno Fernandes', 'Kobbie Mainoo', 'Amad Diallo'] },
-  { id: 5, name: 'Manchester City', shortName: 'MCI', sport: 'football', leagueId: 2, players: ['Erling Haaland', 'Phil Foden', 'Rodri'] },
-  { id: 6, name: 'Liverpool', shortName: 'LIV', sport: 'football', leagueId: 2, players: ['Mohamed Salah', 'Virgil van Dijk', 'Alisson'] },
-  { id: 7, name: 'Arsenal', shortName: 'ARS', sport: 'football', leagueId: 2, players: ['Bukayo Saka', 'Martin Odegaard', 'Declan Rice'] },
-  { id: 8, name: 'India', shortName: 'IND', sport: 'cricket', leagueId: 3, players: ['Rohit Sharma', 'Virat Kohli', 'Jasprit Bumrah'] },
-  { id: 9, name: 'Australia', shortName: 'AUS', sport: 'cricket', leagueId: 3, players: ['Pat Cummins', 'Steve Smith', 'Travis Head'] },
-  { id: 10, name: 'New Zealand', shortName: 'NZ', sport: 'cricket', leagueId: 3, players: ['Kane Williamson', 'Rachin Ravindra', 'Mitchell Santner'] },
-  { id: 11, name: 'England', shortName: 'ENG', sport: 'cricket', leagueId: 3, players: ['Joe Root', 'Ben Stokes', 'Jos Buttler'] },
+  {
+    id: 1, name: 'FC Barcelona', shortName: 'FCB', sport: 'football', leagueId: 1,
+    players: ['Joan Garcia', 'Jules Kounde', 'Pau Cubarsi', 'Ronald Araujo', 'Alejandro Balde', 'Frenkie de Jong', 'Pedri', 'Gavi', 'Lamine Yamal', 'Raphinha', 'Robert Lewandowski'],
+  },
+  {
+    id: 2, name: 'Real Madrid', shortName: 'RMA', sport: 'football', leagueId: 1,
+    players: ['Thibaut Courtois', 'Trent Alexander-Arnold', 'Dean Huijsen', 'Antonio Rudiger', 'Ferland Mendy', 'Federico Valverde', 'Aurelien Tchouameni', 'Jude Bellingham', 'Arda Guler', 'Vinicius Jr', 'Kylian Mbappe'],
+  },
+  {
+    id: 3, name: 'Atletico Madrid', shortName: 'ATM', sport: 'football', leagueId: 1,
+    players: ['Jan Oblak', 'Nahuel Molina', 'Jose Gimenez', 'Robin Le Normand', 'David Hancko', 'Koke', 'Pablo Barrios', 'Conor Gallagher', 'Giuliano Simeone', 'Alexander Sorloth', 'Julian Alvarez'],
+  },
+  {
+    id: 4, name: 'Manchester United', shortName: 'MUN', sport: 'football', leagueId: 2,
+    players: ['Senne Lammens', 'Diogo Dalot', 'Matthijs de Ligt', 'Lisandro Martinez', 'Luke Shaw', 'Casemiro', 'Kobbie Mainoo', 'Bruno Fernandes', 'Bryan Mbeumo', 'Matheus Cunha', 'Benjamin Sesko'],
+  },
+  {
+    id: 5, name: 'Manchester City', shortName: 'MCI', sport: 'football', leagueId: 2,
+    players: ['Gianluigi Donnarumma', 'Rico Lewis', 'Ruben Dias', 'John Stones', 'Josko Gvardiol', 'Rodri', 'Bernardo Silva', 'Tijjani Reijnders', 'Phil Foden', 'Jeremy Doku', 'Erling Haaland'],
+  },
+  {
+    id: 6, name: 'Liverpool', shortName: 'LIV', sport: 'football', leagueId: 2,
+    players: ['Alisson', 'Jeremie Frimpong', 'Ibrahima Konate', 'Virgil van Dijk', 'Andy Robertson', 'Ryan Gravenberch', 'Alexis Mac Allister', 'Dominik Szoboszlai', 'Florian Wirtz', 'Mohamed Salah', 'Alexander Isak'],
+  },
+  {
+    id: 7, name: 'Arsenal', shortName: 'ARS', sport: 'football', leagueId: 2,
+    players: ['David Raya', 'Ben White', 'William Saliba', 'Gabriel', 'Riccardo Calafiori', 'Declan Rice', 'Martin Zubimendi', 'Martin Odegaard', 'Bukayo Saka', 'Gabriel Martinelli', 'Viktor Gyokeres'],
+  },
+  {
+    id: 8, name: 'India', shortName: 'IND', sport: 'cricket', leagueId: 3,
+    players: ['Abhishek Sharma', 'Shubman Gill', 'Suryakumar Yadav', 'Tilak Varma', 'Sanju Samson', 'Hardik Pandya', 'Axar Patel', 'Kuldeep Yadav', 'Varun Chakaravarthy', 'Jasprit Bumrah', 'Arshdeep Singh'],
+  },
+  {
+    id: 9, name: 'Australia', shortName: 'AUS', sport: 'cricket', leagueId: 3,
+    players: ['Travis Head', 'Mitchell Marsh', 'Josh Inglis', 'Glenn Maxwell', 'Tim David', 'Marcus Stoinis', 'Cameron Green', 'Pat Cummins', 'Nathan Ellis', 'Adam Zampa', 'Josh Hazlewood'],
+  },
+  {
+    id: 10, name: 'New Zealand', shortName: 'NZ', sport: 'cricket', leagueId: 3,
+    players: ['Tim Seifert', 'Devon Conway', 'Rachin Ravindra', 'Daryl Mitchell', 'Glenn Phillips', 'Mark Chapman', 'Mitchell Santner', 'Michael Bracewell', 'Matt Henry', 'Lockie Ferguson', 'Ish Sodhi'],
+  },
+  {
+    id: 11, name: 'England', shortName: 'ENG', sport: 'cricket', leagueId: 3,
+    players: ['Phil Salt', 'Jos Buttler', 'Jacob Bethell', 'Harry Brook', 'Ben Duckett', 'Will Jacks', 'Sam Curran', 'Brydon Carse', 'Jofra Archer', 'Adil Rashid', 'Mark Wood'],
+  },
 ]
 
 export const matches = [
