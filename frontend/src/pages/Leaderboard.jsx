@@ -42,7 +42,8 @@ function Leaderboard({ teams, matches, leagues }) {
         ))}
       </select>
 
-      <table>
+      <div className="mt-6 overflow-x-auto">
+      <table className="[&_td:nth-child(n+3)]:text-right [&_th:nth-child(n+3)]:w-14 [&_th:nth-child(n+3)]:text-right">
         <thead>
           <tr>
             <th>#</th>
@@ -57,17 +58,18 @@ function Leaderboard({ teams, matches, leagues }) {
         <tbody>
           {table.map((t, i) => (
             <tr key={t.id}>
-              <td>{i + 1}</td>
-              <td>{t.name}</td>
+              <td className="num w-8 text-lg text-muted">{i + 1}</td>
+              <td className="font-medium">{t.name}</td>
               <td>{t.played}</td>
               <td>{t.won}</td>
               <td>{t.drawn}</td>
               <td>{t.lost}</td>
-              <td>{t.points}</td>
+              <td className="num text-xl">{t.points}</td>
             </tr>
           ))}
         </tbody>
       </table>
+      </div>
     </div>
   )
 }
