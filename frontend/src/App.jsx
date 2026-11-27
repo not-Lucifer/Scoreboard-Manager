@@ -38,10 +38,14 @@ function App() {
   }, [teams, matches])
 
   return (
-    <div>
-      <h1>Scoreboard Manager</h1>
-      <Navbar />
-      <hr />
+    <div className="min-h-screen">
+      <header className="border-b border-line bg-white">
+        <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-between gap-x-8 gap-y-2 px-4 py-4">
+          <h1 className="text-lg font-extrabold">Scoreboard Manager</h1>
+          <Navbar />
+        </div>
+      </header>
+      <main className="mx-auto max-w-4xl px-4 py-8">
       <Routes>
         <Route path="/" element={<Home teams={teams} matches={matches} />} />
         <Route path="/teams" element={<Teams teams={teams} setTeams={setTeams} leagues={leagues} />} />
@@ -53,6 +57,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
+      </main>
     </div>
   )
 }
