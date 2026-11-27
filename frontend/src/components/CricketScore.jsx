@@ -3,15 +3,19 @@ import { overs } from '../utils'
 import Scorecard from './Scorecard'
 
 function ballText(b) {
+  let t = b.runs + ' run'
+  if (b.extra === 'wide') t = 'wide' + (b.runs ? ' +' + b.runs : '')
+  else if (b.extra === 'no ball') t = 'no ball' + (b.runs ? ' +' + b.runs : '')
+  else if (b.extra) t = b.runs + ' ' + b.extra
+  if (b.how === 'run out') return t + ', RUN OUT ' + b.out
   if (b.wicket) return 'OUT'
-  if (b.extra === 'wide') return 'wide' + (b.runs ? ' +' + b.runs : '')
-  if (b.extra === 'no ball') return 'no ball' + (b.runs ? ' +' + b.runs : '')
-  if (b.extra) return b.runs + ' ' + b.extra
-  return b.runs + ' run'
+  return t
 }
 
 function CricketScore({ match, teams, updateMatch }) {
   const [extra, setExtra] = useState('')
+  const [runOutWho, setRunOutWho] = useState('')
+  const [runOutRuns, setRunOutRuns] = useState(0)
 
   // which side bats in this innings
   const firstSide = match.battingFirst === match.teamA ? 'scoreA' : 'scoreB'
@@ -27,14 +31,16 @@ function CricketScore({ match, teams, updateMatch }) {
   const bowler = match.bowler || ''
   const lastBowler = match.lastBowler || ''
 
-  const outs = match.log.filter((b) => b.innings === match.innings && b.wicket).map((b) => b.batter)
+  const outs = match.log.filter((b) => b.innings === match.innings && b.wicket).map((b) => b.out || b.batter)
   const nextBatters = (batTeam?.players || []).filter((p) => !outs.includes(p) && p !== striker && p !== nonStriker)
   const bowlers = (bowlTeam?.players || []).filter((p) => p !== lastBowler)
 
-  function addBall(runs, isWicket) {
+  // how = '' (no wicket), 'out' (striker out) or 'run out'
+  function addBall(runs, how = '', outName = '') {
     if (!striker || !nonStriker || !bowler) return alert('select striker, non striker and bowler')
 
-    const ex = isWicket ? '' : extra
+    const isWicket = how !== ''
+    const ex = how === 'out' ? '' : extra
     const legal = ex !== 'wide' && ex !== 'no ball'
     const total = legal ? runs : runs + 1
 
@@ -44,20 +50,25 @@ function CricketScore({ match, teams, updateMatch }) {
       balls: legal ? s.balls + 1 : s.balls,
     }
 
-    const ball = { innings: match.innings, over: overs(newScore.balls), batter: striker, bowler, runs, extra: ex, wicket: !!isWicket }
+    const out = how === 'out' ? striker : outName
+    const ball = { innings: match.innings, over: overs(newScore.balls), batter: striker, bowler, runs, extra: ex, wicket: isWicket, how, out }
     const changes = { [batSide]: newScore, log: [ball, ...match.log] }
 
     // strike change on odd runs
     let st = striker
     let ns = nonStriker
     if (runs % 2 === 1) [st, ns] = [ns, st]
-    if (isWicket) st = ''
 
     // over done -> swap ends and new bowler
     if (legal && newScore.balls % 6 === 0) {
       ;[st, ns] = [ns, st]
       changes.lastBowler = bowler
       changes.bowler = ''
+    }
+    // out batter leaves, new one comes at that end
+    if (isWicket) {
+      if (st === out) st = ''
+      if (ns === out) ns = ''
     }
     changes.striker = st
     changes.nonStriker = ns
@@ -82,6 +93,13 @@ function CricketScore({ match, teams, updateMatch }) {
 
     setExtra('')
     updateMatch(changes)
+  }
+
+  function runOut() {
+    if (!runOutWho) return alert('who is run out?')
+    addBall(Number(runOutRuns), 'run out', runOutWho)
+    setRunOutWho('')
+    setRunOutRuns(0)
   }
 
   function pick(list, field) {
@@ -127,7 +145,22 @@ function CricketScore({ match, teams, updateMatch }) {
             {[0, 1, 2, 3, 4, 6].map((r) => (
               <button key={r} onClick={() => addBall(r)}>{r}</button>
             ))}
-            {' '}<button onClick={() => addBall(0, true)}>wicket</button>
+            {' '}<button onClick={() => addBall(0, 'out')}>wicket</button>
+          </p>
+          <p>
+            Run out:{' '}
+            <select value={runOutWho} onChange={(e) => setRunOutWho(e.target.value)}>
+              <option value="">who</option>
+              {striker && <option value={striker}>{striker}</option>}
+              {nonStriker && <option value={nonStriker}>{nonStriker}</option>}
+            </select>
+            {' '}runs done:{' '}
+            <select value={runOutRuns} onChange={(e) => setRunOutRuns(e.target.value)}>
+              {[0, 1, 2, 3].map((r) => (
+                <option key={r} value={r}>{r}</option>
+              ))}
+            </select>
+            {' '}<button onClick={runOut}>run out</button>
           </p>
         </div>
       )}

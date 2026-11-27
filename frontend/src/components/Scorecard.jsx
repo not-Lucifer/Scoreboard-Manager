@@ -22,8 +22,11 @@ function Scorecard({ match, innings, teamName }) {
     }
     if (b.extra !== 'wide') bat.balls++
     if (b.wicket) {
-      bat.out = true
-      bowl.wickets++
+      const outName = b.out || b.batter
+      if (!batters[outName]) batters[outName] = { runs: 0, balls: 0, fours: 0, sixes: 0, out: false }
+      batters[outName].out = true
+      // run out is not bowler's wicket
+      if (b.how !== 'run out') bowl.wickets++
     }
 
     if (b.extra === 'wide') {
