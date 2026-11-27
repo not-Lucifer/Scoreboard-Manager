@@ -1,3 +1,6 @@
+import path from 'node:path'
+import fs from 'node:fs'
+import { fileURLToPath } from 'node:url'
 import express from 'express'
 import cors from 'cors'
 import authRoutes from './routes/auth.js'
@@ -19,6 +22,17 @@ app.use('/api/leagues', protectWrites, leagueRoutes)
 app.use('/api/teams', protectWrites, teamRoutes)
 app.use('/api/matches', protectWrites, matchRoutes)
 app.use('/api/leaderboard', leaderboardRoutes)
+
+// in production the backend also serves the built frontend (one url on render)
+const dist = path.join(path.dirname(fileURLToPath(import.meta.url)), '../../frontend/dist')
+if (fs.existsSync(dist)) {
+  app.use(express.static(dist))
+  // react router pages like /matches/4 -> index.html
+  app.use((req, res, next) => {
+    if (req.method !== 'GET' || req.path.startsWith('/api')) return next()
+    res.sendFile(path.join(dist, 'index.html'))
+  })
+}
 
 app.use(notFound)
 app.use(errorHandler)
