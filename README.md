@@ -15,6 +15,8 @@ npm run dev
 ```
 
 ## Sample data
+Every team has 11 players (example squads).
+
 - La Liga - FC Barcelona, Real Madrid, Atletico Madrid
 - Premier League - Manchester United, Manchester City, Liverpool, Arsenal
 - ICC T20 World Cup - India, Australia, New Zealand, England
@@ -22,9 +24,9 @@ npm run dev
 ## Pages
 - Home - live matches
 - Teams - teams by league, add / delete, team details with players
-- Matches - create match (league -> teams), open scoreboard
+- Matches - create match (league -> teams), for cricket also overs + who bats first
 - Scoreboard
-  - football: +1 / -1 goals
-  - cricket: runs (0,1,2,4,6), wide, wicket, overs
+  - football: add events with minute, team, player (goal, penalty goal, penalty missed, yellow card, red card), goals update score, delete event
+  - cricket: pick batter + bowler, runs (0,1,2,4,6), wide, wicket, ball by ball log, innings ends on all out / overs done / target chased
 - Leaderboard - per league (football: win 3 draw 1, cricket: win 2 tie 1)
 - Login / Register - forms only for now
