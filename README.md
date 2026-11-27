@@ -15,7 +15,7 @@ npm run dev
 ```
 
 ## Sample data
-Every team has 11 players, football teams also have 4 subs (example squads).
+Every team has 11 players, football teams also have 7 subs (example squads).
 
 - La Liga - FC Barcelona, Real Madrid, Atletico Madrid
 - Premier League - Manchester United, Manchester City, Liverpool, Arsenal
@@ -26,8 +26,8 @@ Every team has 11 players, football teams also have 4 subs (example squads).
 - Teams - teams by league, add / delete, team details with players
 - Matches - create match (league -> teams), for cricket also overs + who bats first
 - Scoreboard
-  - football: add events with minute, team, player (goal, penalty goal, own goal, penalty missed, yellow card, red card, substitution), goals update score, delete event, only players on pitch can be picked
-  - cricket: striker / non striker / bowler, strike changes on odd runs and end of over, new bowler every over, runs (0,1,2,3,4,6), wide, no ball, bye, leg bye, wicket, scorecard (batting + bowling stats), ball by ball log, innings ends on all out / overs done / target chased
+  - football: add events with minute, team, player (goal, penalty goal, own goal, penalty missed, yellow card, red card, substitution), goals update score, delete event, only players on pitch can be picked, max 5 subs
+  - cricket: striker / non striker / bowler, strike changes on odd runs and end of over, new bowler every over, runs (0,1,2,3,4,6), wide, no ball (+ free hit), bye, leg bye, wicket, run out, max overs per bowler (overs / 5), undo last ball, scorecard (batting + bowling stats), ball by ball log, innings ends on all out / overs done / target chased
 - Data is saved in localStorage, "reset data" button brings back sample data
 - Leaderboard - per league (football: win 3 draw 1, cricket: win 2 tie 1)
 - Login / Register - forms only for now
