@@ -54,6 +54,10 @@ function Matches({ teams, matches, setMatches, leagues }) {
         battingFirst: Number(battingFirst),
         innings: 1,
         log: [],
+        striker: '',
+        nonStriker: '',
+        bowler: '',
+        lastBowler: '',
       }
     }
 
