@@ -3,6 +3,10 @@
 Full stack app to manage teams, matches and live scores for multiple sports.
 Right now: **football** and **cricket**.
 
+**Live demo:** https://scoreboard-manager.onrender.com
+
+(Free Render plan - if the site was idle, the first load can take up to a minute.)
+
 ## Login credentials
 | Role | Username | Password | Can do |
 |------|----------|----------|--------|
