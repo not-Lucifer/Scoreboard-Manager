@@ -94,8 +94,8 @@ export const matches = [
   },
   { id: 5, sport: 'football', leagueId: 2, teamA: 5, teamB: 4, scoreA: 0, scoreB: 0, status: 'upcoming', date: '2026-11-30', events: [] },
   // cricket score = runs, wickets, balls
-  { id: 6, sport: 'cricket', leagueId: 3, teamA: 8, teamB: 9, scoreA: { runs: 186, wickets: 5, balls: 120 }, scoreB: { runs: 172, wickets: 9, balls: 120 }, status: 'finished', date: '2026-11-15', overs: 20, battingFirst: 8, innings: 2, log: [] },
-  { id: 7, sport: 'cricket', leagueId: 3, teamA: 10, teamB: 11, scoreA: { runs: 160, wickets: 8, balls: 120 }, scoreB: { runs: 161, wickets: 6, balls: 113 }, status: 'finished', date: '2026-11-18', overs: 20, battingFirst: 10, innings: 2, log: [] },
-  { id: 8, sport: 'cricket', leagueId: 3, teamA: 8, teamB: 10, scoreA: { runs: 0, wickets: 0, balls: 0 }, scoreB: { runs: 0, wickets: 0, balls: 0 }, status: 'live', date: '2026-11-27', overs: 20, battingFirst: 8, innings: 1, log: [] },
-  { id: 9, sport: 'cricket', leagueId: 3, teamA: 9, teamB: 11, scoreA: { runs: 0, wickets: 0, balls: 0 }, scoreB: { runs: 0, wickets: 0, balls: 0 }, status: 'upcoming', date: '2026-12-01', overs: 20, battingFirst: 9, innings: 1, log: [] },
+  { id: 6, sport: 'cricket', leagueId: 3, teamA: 8, teamB: 9, scoreA: { runs: 186, wickets: 5, balls: 120 }, scoreB: { runs: 172, wickets: 9, balls: 120 }, status: 'finished', date: '2026-11-15', format: 'T20', overs: 20, battingFirst: 8, innings: 2, log: [] },
+  { id: 7, sport: 'cricket', leagueId: 3, teamA: 10, teamB: 11, scoreA: { runs: 160, wickets: 8, balls: 120 }, scoreB: { runs: 161, wickets: 6, balls: 113 }, status: 'finished', date: '2026-11-18', format: 'T20', overs: 20, battingFirst: 10, innings: 2, log: [] },
+  { id: 8, sport: 'cricket', leagueId: 3, teamA: 8, teamB: 10, scoreA: { runs: 0, wickets: 0, balls: 0 }, scoreB: { runs: 0, wickets: 0, balls: 0 }, status: 'live', date: '2026-11-27', format: 'T20', overs: 20, battingFirst: 8, innings: 1, log: [] },
+  { id: 9, sport: 'cricket', leagueId: 3, teamA: 9, teamB: 11, scoreA: { runs: 0, wickets: 0, balls: 0 }, scoreB: { runs: 0, wickets: 0, balls: 0 }, status: 'upcoming', date: '2026-12-01', format: 'T20', overs: 20, battingFirst: 9, innings: 1, log: [] },
 ]

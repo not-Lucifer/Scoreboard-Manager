@@ -147,7 +147,7 @@ function CricketScore({ match, teams, updateMatch }) {
 
   return (
     <div>
-      <p>{match.overs} overs | Innings {match.innings}</p>
+      <p>{match.format} {match.overs} overs | Innings {match.innings}</p>
       <p>Batting: {batTeam?.name} | Bowling: {bowlTeam?.name}</p>
       {match.innings === 2 && match.status === 'live' && (
         <p>Target {target} - need {target - s.runs} from {match.overs * 6 - s.balls} balls</p>

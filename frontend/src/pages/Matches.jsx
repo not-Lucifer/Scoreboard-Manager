@@ -8,6 +8,7 @@ function Matches({ teams, matches, setMatches, leagues }) {
   const [teamB, setTeamB] = useState('')
   const [date, setDate] = useState('')
   // cricket only
+  const [format, setFormat] = useState('T20')
   const [overs, setOvers] = useState(20)
   const [battingFirst, setBattingFirst] = useState('')
 
@@ -44,13 +45,14 @@ function Matches({ teams, matches, setMatches, leagues }) {
     }
 
     if (isCricket) {
-      if (!overs || overs < 1) return alert('enter overs')
+      if (format === 'Custom' && (!overs || overs < 1 || overs > 50)) return alert('overs must be 1 to 50')
       if (!battingFirst) return alert('select who bats first')
       newMatch = {
         ...newMatch,
         scoreA: { runs: 0, wickets: 0, balls: 0 },
         scoreB: { runs: 0, wickets: 0, balls: 0 },
-        overs: Number(overs),
+        format,
+        overs: format === 'T20' ? 20 : format === 'ODI' ? 50 : Number(overs),
         battingFirst: Number(battingFirst),
         innings: 1,
         log: [],
@@ -64,6 +66,7 @@ function Matches({ teams, matches, setMatches, leagues }) {
     setMatches([...matches, newMatch])
     changeLeague('')
     setDate('')
+    setFormat('T20')
     setOvers(20)
   }
 
@@ -94,7 +97,17 @@ function Matches({ teams, matches, setMatches, leagues }) {
 
         {isCricket && (
           <div>
-            Overs: <input type="number" min="1" value={overs} onChange={(e) => setOvers(e.target.value)} />
+            Format:{' '}
+            <select value={format} onChange={(e) => setFormat(e.target.value)}>
+              <option value="T20">T20 (20 overs)</option>
+              <option value="ODI">ODI (50 overs)</option>
+              <option value="Custom">Custom</option>
+            </select>
+            {format === 'Custom' && (
+              <span>
+                {' '}Overs: <input type="number" min="1" max="50" value={overs} onChange={(e) => setOvers(e.target.value)} />
+              </span>
+            )}
             {' '}Batting first:{' '}
             <select value={battingFirst} onChange={(e) => setBattingFirst(e.target.value)}>
               <option value="">select</option>
@@ -114,7 +127,7 @@ function Matches({ teams, matches, setMatches, leagues }) {
         {matches.map((m) => (
           <li key={m.id}>
             [{leagueName(m.leagueId)}] {teamName(m.teamA)} vs {teamName(m.teamB)} - {scoreText(m)} ({m.status}) {m.date}
-            {m.sport === 'cricket' && ` | ${m.overs} overs`}{' '}
+            {m.sport === 'cricket' && ` | ${m.format || ''} ${m.overs} overs`}{' '}
             <Link to={`/matches/${m.id}`}>open</Link>
           </li>
         ))}
