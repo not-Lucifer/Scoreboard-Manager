@@ -1,13 +1,19 @@
-function Leaderboard({ teams, matches }) {
+import { useState } from 'react'
+
+function Leaderboard({ teams, matches, leagues }) {
+  const [leagueId, setLeagueId] = useState(leagues[0].id)
+
+  const leagueTeams = teams.filter((t) => t.leagueId === Number(leagueId))
+  const leagueMatches = matches.filter((m) => m.leagueId === Number(leagueId) && m.status === 'finished')
+
   // 3 pts win, 1 pt draw
-  const table = teams.map((t) => {
+  const table = leagueTeams.map((t) => {
     let played = 0
     let won = 0
     let drawn = 0
     let lost = 0
 
-    matches.forEach((m) => {
-      if (m.status !== 'finished') return
+    leagueMatches.forEach((m) => {
       if (m.teamA !== t.id && m.teamB !== t.id) return
       played++
       const mine = m.teamA === t.id ? m.scoreA : m.scoreB
@@ -25,6 +31,12 @@ function Leaderboard({ teams, matches }) {
   return (
     <div>
       <h2>Leaderboard</h2>
+      <select value={leagueId} onChange={(e) => setLeagueId(e.target.value)}>
+        {leagues.map((l) => (
+          <option key={l.id} value={l.id}>{l.name} ({l.sport})</option>
+        ))}
+      </select>
+
       <table>
         <thead>
           <tr>
