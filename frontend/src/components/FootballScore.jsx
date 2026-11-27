@@ -68,8 +68,8 @@ function FootballScore({ match, teams, updateMatch }) {
   return (
     <div>
       {match.status === 'live' && (
-        <form onSubmit={addEvent}>
-          <input type="number" min="1" max="120" placeholder="Minute" value={minute} onChange={(e) => setMinute(e.target.value)} />
+        <form onSubmit={addEvent} className="panel flex flex-wrap items-center gap-2">
+          <input className="w-24" type="number" min="1" max="120" placeholder="Minute" value={minute} onChange={(e) => setMinute(e.target.value)} />
           <select value={type} onChange={(e) => setType(e.target.value)}>
             {types.map((t) => (
               <option key={t} value={t}>{t}</option>
@@ -94,17 +94,23 @@ function FootballScore({ match, teams, updateMatch }) {
               ))}
             </select>
           )}
-          <button type="submit">Add</button>
+          <button type="submit" className="btn-primary">Add event</button>
         </form>
       )}
 
       <h3>Match events</h3>
-      {sorted.length === 0 && <p>nothing yet</p>}
-      <ul>
+      {sorted.length === 0 && <p className="text-muted">No events yet.</p>}
+      <ul className="divide-y divide-line border-y border-line">
         {sorted.map((ev, i) => (
-          <li key={i}>
-            {ev.minute}' {ev.type} - {ev.type === 'substitution' ? `out ${ev.player}, in ${ev.playerIn}` : ev.player} ({teamName(ev.teamId)})
-            {match.status === 'live' && <button onClick={() => deleteEvent(ev)}>x</button>}
+          <li key={i} className="py-2.5">
+            <span className="num inline-block w-12 text-xl">{ev.minute}'</span>{' '}
+            {ev.type === 'yellow card' && <span className="mr-1.5 inline-block h-3.5 w-2.5 rounded-[2px] bg-yellow-400 align-[-2px]"></span>}
+            {ev.type === 'red card' && <span className="mr-1.5 inline-block h-3.5 w-2.5 rounded-[2px] bg-live align-[-2px]"></span>}
+            <span className={goalFor(ev) ? 'font-semibold' : ''}>{ev.type}</span> - {ev.type === 'substitution' ? `out ${ev.player}, in ${ev.playerIn}` : ev.player}{' '}
+            <span className="text-muted">({teamName(ev.teamId)})</span>
+            {match.status === 'live' && (
+              <button onClick={() => deleteEvent(ev)} className="ml-3 px-2 py-0.5 text-xs text-muted">Remove</button>
+            )}
           </li>
         ))}
       </ul>

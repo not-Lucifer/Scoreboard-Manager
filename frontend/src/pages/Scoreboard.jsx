@@ -17,17 +17,23 @@ function Scoreboard({ teams, matches, setMatches }) {
 
   return (
     <div>
-      <Link to="/matches">back</Link>
-      <h2>{teamName(match.teamA)} vs {teamName(match.teamB)}</h2>
-      <p>{match.sport} | Status: {match.status}</p>
-      <h1>{scoreText(match)}</h1>
+      <Link to="/matches" className="text-sm">Back to matches</Link>
+      <h2 className="mt-4 mb-1">{teamName(match.teamA)} vs {teamName(match.teamB)}</h2>
+      <p className="mt-0 text-sm text-muted">
+        <span className="capitalize">{match.sport}</span> | Status: {match.status}
+      </p>
+      <h1 className={'num my-8 leading-none ' + (match.sport === 'cricket' ? 'text-5xl sm:text-7xl' : 'text-8xl sm:text-9xl')}>
+        {scoreText(match)}
+      </h1>
 
       {match.sport === 'football' && <FootballScore match={match} teams={teams} updateMatch={updateMatch} />}
       {match.sport === 'cricket' && <CricketScore match={match} teams={teams} updateMatch={updateMatch} />}
 
-      {match.status === 'upcoming' && <button onClick={() => updateMatch({ status: 'live' })}>Start Match</button>}
-      {match.status === 'live' && <button onClick={() => updateMatch({ status: 'finished' })}>End Match</button>}
-      {match.status === 'finished' && <p>Match over</p>}
+      <div className="mt-8">
+        {match.status === 'upcoming' && <button className="btn-primary" onClick={() => updateMatch({ status: 'live' })}>Start match</button>}
+        {match.status === 'live' && <button onClick={() => updateMatch({ status: 'finished' })}>End match</button>}
+        {match.status === 'finished' && <p className="text-muted">Match over</p>}
+      </div>
     </div>
   )
 }
