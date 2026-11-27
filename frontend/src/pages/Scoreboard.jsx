@@ -1,5 +1,6 @@
 import { useParams, Link } from 'react-router-dom'
 import { scoreText } from '../utils'
+import CricketScore from '../components/CricketScore'
 
 function Scoreboard({ teams, matches, setMatches }) {
   const { id } = useParams()
@@ -11,33 +12,6 @@ function Scoreboard({ teams, matches, setMatches }) {
 
   function updateMatch(changes) {
     setMatches(matches.map((m) => (m.id === match.id ? { ...m, ...changes } : m)))
-  }
-
-  // cricket: side is 'scoreA' or 'scoreB'
-  function addBall(side, runs, isWicket, isWide) {
-    const s = match[side]
-    if (s.wickets >= 10) return alert('all out')
-    updateMatch({
-      [side]: {
-        runs: s.runs + runs,
-        wickets: isWicket ? s.wickets + 1 : s.wickets,
-        balls: isWide ? s.balls : s.balls + 1,
-      },
-    })
-  }
-
-  function cricketButtons(side) {
-    return (
-      <span>
-        <button onClick={() => addBall(side, 0)}>0</button>
-        <button onClick={() => addBall(side, 1)}>1</button>
-        <button onClick={() => addBall(side, 2)}>2</button>
-        <button onClick={() => addBall(side, 4)}>4</button>
-        <button onClick={() => addBall(side, 6)}>6</button>
-        <button onClick={() => addBall(side, 1, false, true)}>wide</button>
-        <button onClick={() => addBall(side, 0, true)}>wicket</button>
-      </span>
-    )
   }
 
   return (
@@ -62,16 +36,7 @@ function Scoreboard({ teams, matches, setMatches }) {
         </div>
       )}
 
-      {match.status === 'live' && match.sport === 'cricket' && (
-        <div>
-          <p>
-            {teamName(match.teamA)} {cricketButtons('scoreA')}
-          </p>
-          <p>
-            {teamName(match.teamB)} {cricketButtons('scoreB')}
-          </p>
-        </div>
-      )}
+      {match.sport === 'cricket' && <CricketScore match={match} teams={teams} updateMatch={updateMatch} />}
 
       {match.status === 'upcoming' && <button onClick={() => updateMatch({ status: 'live' })}>Start Match</button>}
       {match.status === 'live' && <button onClick={() => updateMatch({ status: 'finished' })}>End Match</button>}
