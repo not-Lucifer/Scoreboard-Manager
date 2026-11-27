@@ -37,17 +37,10 @@ function App() {
     }
   }, [teams, matches])
 
-  function resetData() {
-    if (!confirm('reset all data?')) return
-    setTeams(dummyTeams)
-    setMatches(dummyMatches)
-  }
-
   return (
     <div>
       <h1>Scoreboard Manager</h1>
       <Navbar />
-      <button onClick={resetData}>reset data</button>
       <hr />
       <Routes>
         <Route path="/" element={<Home teams={teams} matches={matches} />} />
