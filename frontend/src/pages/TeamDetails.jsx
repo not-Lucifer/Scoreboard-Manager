@@ -30,7 +30,7 @@ function TeamDetails({ teams, setTeams, leagues }) {
       <ol className="grid border-t border-line sm:grid-cols-2 sm:gap-x-8">
         {team.players.map((p, i) => (
           <li key={i} className="flex gap-3 border-b border-line py-2">
-            <span className="num w-5 text-right text-muted">{i + 1}</span>
+            {team.sport === 'cricket' && <span className="num w-5 text-right text-muted">{i + 1}</span>}
             {p}
           </li>
         ))}
