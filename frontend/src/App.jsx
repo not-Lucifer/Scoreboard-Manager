@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Home from './pages/Home'
@@ -12,14 +12,42 @@ import Register from './pages/Register'
 import NotFound from './pages/NotFound'
 import { leagues, teams as dummyTeams, matches as dummyMatches } from './data/dummy'
 
+const KEY = 'sbm-v1'
+
+// load saved data, else dummy data
+function loadData() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(KEY))
+    if (saved && saved.teams && saved.matches) return saved
+  } catch {
+    // bad data, ignore
+  }
+  return { teams: dummyTeams, matches: dummyMatches }
+}
+
 function App() {
-  const [teams, setTeams] = useState(dummyTeams)
-  const [matches, setMatches] = useState(dummyMatches)
+  const [teams, setTeams] = useState(() => loadData().teams)
+  const [matches, setMatches] = useState(() => loadData().matches)
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(KEY, JSON.stringify({ teams, matches }))
+    } catch {
+      // storage full or blocked
+    }
+  }, [teams, matches])
+
+  function resetData() {
+    if (!confirm('reset all data?')) return
+    setTeams(dummyTeams)
+    setMatches(dummyMatches)
+  }
 
   return (
     <div>
       <h1>Scoreboard Manager</h1>
       <Navbar />
+      <button onClick={resetData}>reset data</button>
       <hr />
       <Routes>
         <Route path="/" element={<Home teams={teams} matches={matches} />} />
