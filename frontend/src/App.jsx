@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
+import Footer from './components/Footer'
 import Home from './pages/Home'
 import Teams from './pages/Teams'
 import TeamDetails from './pages/TeamDetails'
@@ -83,14 +84,17 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="flex min-h-screen flex-col">
       <header className="border-b border-line bg-white">
         <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-between gap-x-8 gap-y-2 px-4 py-4">
-          <h1 className="text-lg font-extrabold">Scoreboard Manager</h1>
+          <div>
+            <h1 className="text-lg font-extrabold leading-tight">Scoreboard Manager</h1>
+            <p className="m-0 text-sm text-muted">ABESEC Ghaziabad</p>
+          </div>
           <Navbar user={user} setUser={setUser} />
         </div>
       </header>
-      <main className="mx-auto max-w-4xl px-4 py-8">
+      <main className="mx-auto w-full max-w-4xl flex-1 px-4 py-8">
         {loading && <p className="text-muted">Loading...</p>}
         {error && (
           <p>
@@ -111,6 +115,7 @@ function App() {
           </Routes>
         )}
       </main>
+      <Footer />
     </div>
   )
 }
