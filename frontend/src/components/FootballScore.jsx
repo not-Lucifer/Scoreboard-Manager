@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const types = ['goal', 'penalty goal', 'penalty missed', 'yellow card', 'red card']
+const types = ['goal', 'penalty goal', 'own goal', 'penalty missed', 'yellow card', 'red card']
 const goalTypes = ['goal', 'penalty goal']
 
 function FootballScore({ match, teams, updateMatch }) {
@@ -13,16 +13,22 @@ function FootballScore({ match, teams, updateMatch }) {
   const team = teams.find((t) => t.id === Number(teamId))
   const sorted = [...match.events].sort((a, b) => a.minute - b.minute)
 
+  // which team gets the goal (own goal goes to other team)
+  function goalFor(ev) {
+    if (goalTypes.includes(ev.type)) return ev.teamId
+    if (ev.type === 'own goal') return ev.teamId === match.teamA ? match.teamB : match.teamA
+    return null
+  }
+
   function addEvent(e) {
     e.preventDefault()
     if (!minute || !teamId || !player) return alert('fill minute, team and player')
 
     const ev = { id: Date.now(), minute: Number(minute), type, teamId: Number(teamId), player }
     const changes = { events: [...match.events, ev] }
-    if (goalTypes.includes(type)) {
-      if (ev.teamId === match.teamA) changes.scoreA = match.scoreA + 1
-      else changes.scoreB = match.scoreB + 1
-    }
+    const g = goalFor(ev)
+    if (g === match.teamA) changes.scoreA = match.scoreA + 1
+    if (g === match.teamB) changes.scoreB = match.scoreB + 1
     updateMatch(changes)
     setMinute('')
     setPlayer('')
@@ -30,10 +36,9 @@ function FootballScore({ match, teams, updateMatch }) {
 
   function deleteEvent(ev) {
     const changes = { events: match.events.filter((x) => x.id !== ev.id) }
-    if (goalTypes.includes(ev.type)) {
-      if (ev.teamId === match.teamA) changes.scoreA = match.scoreA - 1
-      else changes.scoreB = match.scoreB - 1
-    }
+    const g = goalFor(ev)
+    if (g === match.teamA) changes.scoreA = match.scoreA - 1
+    if (g === match.teamB) changes.scoreB = match.scoreB - 1
     updateMatch(changes)
   }
 
