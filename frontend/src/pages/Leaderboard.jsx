@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 function Leaderboard({ teams, matches, leagues }) {
-  const [leagueId, setLeagueId] = useState(leagues[0].id)
+  const [leagueId, setLeagueId] = useState(leagues[0]?.id ?? '')
 
   const isCricket = leagues.find((l) => l.id === Number(leagueId))?.sport === 'cricket'
   const leagueTeams = teams.filter((t) => t.leagueId === Number(leagueId))
