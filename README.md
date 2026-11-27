@@ -5,12 +5,24 @@ Right now: **football** and **cricket**.
 
 ## Tech
 - Frontend: React + Vite + Tailwind CSS (minimal theme, Archivo font)
-- Backend: coming soon
+- Backend: Node + Express + MongoDB (Mongoose) + JWT
+
+## Run backend
+Needs MongoDB (local or Atlas).
+```
+cd backend
+npm install
+cp .env.example .env   # set MONGO_URI and JWT_SECRET
+npm run seed           # sample leagues, teams, matches
+npm run dev
+```
+Runs on http://localhost:5000
 
 ## Run frontend
 ```
 cd frontend
 npm install
+cp .env.example .env   # VITE_API_URL, default http://localhost:5000/api
 npm run dev
 ```
 
@@ -28,6 +40,21 @@ Every team has 11 players, football teams also have 7 subs (example squads).
 - Scoreboard
   - football: add events with minute, team, player (goal, penalty goal, own goal, penalty missed, yellow card, red card, substitution), goals update score, delete event, only players on pitch can be picked, max 5 subs
   - cricket: striker / non striker / bowler, strike changes on odd runs and end of over, new bowler every over, runs (0,1,2,3,4,6), wide, no ball (+ free hit), bye, leg bye, wicket, run out, max overs per bowler (overs / 5), undo last ball, scorecard (batting + bowling stats), ball by ball log, innings ends on all out / overs done / target chased
-- Data is saved in localStorage
+- Data is saved in MongoDB through the backend
 - Leaderboard - per league (football: win 3 draw 1, cricket: win 2 tie 1)
-- Login / Register - forms only for now
+- Login / Register - JWT login, you must be logged in to add / edit / delete (first account is admin)
+
+## API
+| Method | Endpoint | Notes |
+|--------|----------|-------|
+| POST | /api/auth/register | returns token |
+| POST | /api/auth/login | returns token |
+| GET | /api/auth/me | needs token |
+| GET / POST | /api/leagues | |
+| GET / POST | /api/teams | ?leagueId= |
+| GET / PUT / DELETE | /api/teams/:id | can't delete a team that has matches |
+| GET / POST | /api/matches | ?leagueId= &status= |
+| GET / PUT / DELETE | /api/matches/:id | update score / status / events / ball log |
+| GET | /api/leaderboard/:leagueId | from finished matches |
+
+POST / PUT / DELETE need `Authorization: Bearer <token>`.
