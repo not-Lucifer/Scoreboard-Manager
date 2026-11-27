@@ -13,16 +13,14 @@ function Login() {
   }
 
   return (
-    <div>
+    <div className="max-w-sm">
       <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-3">
         <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-        <br />
         <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-        <br />
-        <button type="submit">Login</button>
+        <button type="submit" className="btn-primary">Log in</button>
       </form>
-      <p>
+      <p className="mt-6 text-sm text-muted">
         No account? <Link to="/register">Register</Link>
       </p>
     </div>
