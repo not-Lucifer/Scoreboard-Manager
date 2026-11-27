@@ -1,0 +1,20 @@
+# one web service: builds the react frontend, express serves it + the api
+services:
+  - type: web
+    name: scoreboard-manager
+    runtime: node
+    plan: free
+    region: singapore
+    buildCommand: cd frontend && npm ci --include=dev && npm run build && cd ../backend && npm ci
+    startCommand: node backend/src/index.js
+    healthCheckPath: /api/health
+    autoDeployTrigger: commit
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: VITE_API_URL
+        value: /api
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
