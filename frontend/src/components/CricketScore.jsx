@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { overs } from '../utils'
+import Scorecard from './Scorecard'
 
 function ballText(b) {
   if (b.wicket) return 'OUT'
@@ -131,8 +132,11 @@ function CricketScore({ match, teams, updateMatch }) {
         </div>
       )}
 
+      {match.log.length === 0 && <p>no ball by ball data</p>}
+      <Scorecard match={match} innings={1} teamName={match.innings === 1 ? batTeam?.name : bowlTeam?.name} />
+      <Scorecard match={match} innings={2} teamName={batTeam?.name} />
+
       <h3>Ball by ball</h3>
-      {match.log.length === 0 && <p>nothing yet</p>}
       <ul>
         {match.log.map((b, i) => (
           <li key={match.log.length - i}>
