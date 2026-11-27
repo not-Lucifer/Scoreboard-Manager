@@ -147,25 +147,29 @@ function CricketScore({ match, teams, updateMatch }) {
 
   return (
     <div>
-      <p>{match.format} {match.overs} overs | Innings {match.innings}</p>
-      <p>Batting: {batTeam?.name} | Bowling: {bowlTeam?.name}</p>
+      <p className="text-sm text-muted">{match.format} {match.overs} overs | Innings {match.innings}</p>
+      <p className="text-sm text-muted">Batting: {batTeam?.name} | Bowling: {bowlTeam?.name}</p>
       {match.innings === 2 && match.status === 'live' && (
-        <p>Target {target} - need {target - s.runs} from {match.overs * 6 - s.balls} balls</p>
+        <p className="text-lg font-semibold text-turf">Target {target} - need {target - s.runs} from {match.overs * 6 - s.balls} balls</p>
       )}
 
       {match.status === 'live' && (
-        <div>
+        <div className="panel mt-6 space-y-4 [&>p]:m-0 [&>p]:flex [&>p]:flex-wrap [&>p]:items-center [&>p]:gap-2">
           <p>
             Striker: {striker ? striker + ' *' : pick(nextBatters, 'striker')}
             {' | '}Non striker: {nonStriker || pick(nextBatters, 'nonStriker')}
-            {' '}<button onClick={() => updateMatch({ striker: nonStriker, nonStriker: striker })}>swap strike</button>
+            {' '}<button onClick={() => updateMatch({ striker: nonStriker, nonStriker: striker })} className="px-2 py-1 text-xs">Swap strike</button>
           </p>
           <p>
             Bowler: {bowler || pick(bowlers, 'bowler')}
             {lastBowler && ` (last over: ${lastBowler})`}
-            {` | max ${maxOvers} overs each`}
+            <span className="text-sm text-muted">{` | max ${maxOvers} overs each`}</span>
           </p>
-          {freeHit && <p>FREE HIT</p>}
+          {freeHit && (
+            <p>
+              <span className="rounded bg-live px-2 py-1 text-sm font-semibold text-white">Free hit</span>
+            </p>
+          )}
           <p>
             Extra:{' '}
             <select value={extra} onChange={(e) => setExtra(e.target.value)}>
@@ -175,41 +179,44 @@ function CricketScore({ match, teams, updateMatch }) {
               <option value="bye">bye</option>
               <option value="leg bye">leg bye</option>
             </select>
-            {' '}Runs:{' '}
+          </p>
+          <p>
             {[0, 1, 2, 3, 4, 6].map((r) => (
-              <button key={r} onClick={() => addBall(r)}>{r}</button>
+              <button key={r} onClick={() => addBall(r)} className="num h-14 w-14 text-3xl">{r}</button>
             ))}
-            {' '}<button onClick={() => addBall(0, 'out')}>wicket</button>
+            <button onClick={() => addBall(0, 'out')} className="h-14 border-live px-4 text-live hover:border-live hover:bg-live hover:text-white">Wicket</button>
           </p>
           <p>
             Run out:{' '}
             <select value={runOutWho} onChange={(e) => setRunOutWho(e.target.value)}>
-              <option value="">who</option>
+              <option value="">Who?</option>
               {striker && <option value={striker}>{striker}</option>}
               {nonStriker && <option value={nonStriker}>{nonStriker}</option>}
             </select>
-            {' '}runs done:{' '}
+            {' '}Runs done:{' '}
             <select value={runOutRuns} onChange={(e) => setRunOutRuns(e.target.value)}>
               {[0, 1, 2, 3].map((r) => (
                 <option key={r} value={r}>{r}</option>
               ))}
             </select>
-            {' '}<button onClick={runOut}>run out</button>
+            {' '}<button onClick={runOut}>Run out</button>
           </p>
         </div>
       )}
 
-      {canUndo && <button onClick={undo}>undo last ball</button>}
+      {canUndo && <button onClick={undo} className="mt-3">Undo last ball</button>}
 
-      {match.log.length === 0 && <p>no ball by ball data</p>}
+      {match.log.length === 0 && <p className="text-muted">No ball-by-ball data for this match.</p>}
       <Scorecard match={match} innings={1} teamName={match.innings === 1 ? batTeam?.name : bowlTeam?.name} />
       <Scorecard match={match} innings={2} teamName={batTeam?.name} />
 
       <h3>Ball by ball</h3>
-      <ul>
+      <ul className="divide-y divide-line border-y border-line text-sm">
         {match.log.map((b, i) => (
-          <li key={match.log.length - i}>
-            {b.over} {b.bowler} to {b.batter}: {ballText(b)}
+          <li key={match.log.length - i} className="py-2">
+            <span className="num inline-block w-10 text-base text-muted">{b.over}</span>{' '}
+            {b.bowler} to {b.batter}:{' '}
+            <span className={b.wicket ? 'font-semibold text-live' : b.runs >= 4 && !b.extra ? 'font-semibold' : ''}>{ballText(b)}</span>
           </li>
         ))}
       </ul>
