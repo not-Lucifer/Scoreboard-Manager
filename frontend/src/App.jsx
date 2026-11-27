@@ -25,7 +25,7 @@ function App() {
         <Route path="/" element={<Home teams={teams} matches={matches} />} />
         <Route path="/teams" element={<Teams teams={teams} setTeams={setTeams} leagues={leagues} />} />
         <Route path="/teams/:id" element={<TeamDetails teams={teams} setTeams={setTeams} leagues={leagues} />} />
-        <Route path="/matches" element={<Matches teams={teams} matches={matches} setMatches={setMatches} />} />
+        <Route path="/matches" element={<Matches teams={teams} matches={matches} setMatches={setMatches} leagues={leagues} />} />
         <Route path="/matches/:id" element={<Scoreboard teams={teams} matches={matches} setMatches={setMatches} />} />
         <Route path="/leaderboard" element={<Leaderboard teams={teams} matches={matches} />} />
         <Route path="/login" element={<Login />} />
