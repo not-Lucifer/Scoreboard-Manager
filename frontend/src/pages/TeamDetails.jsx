@@ -29,6 +29,17 @@ function TeamDetails({ teams, setTeams, leagues }) {
         ))}
       </ul>
 
+      {team.subs && (
+        <div>
+          <h3>Substitutes</h3>
+          <ul>
+            {team.subs.map((p, i) => (
+              <li key={i}>{p}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+
       <form onSubmit={addPlayer}>
         <input placeholder="Player name" value={player} onChange={(e) => setPlayer(e.target.value)} />
         <button type="submit">Add Player</button>

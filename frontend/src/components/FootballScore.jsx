@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const types = ['goal', 'penalty goal', 'own goal', 'penalty missed', 'yellow card', 'red card']
+const types = ['goal', 'penalty goal', 'own goal', 'penalty missed', 'yellow card', 'red card', 'substitution']
 const goalTypes = ['goal', 'penalty goal']
 
 function FootballScore({ match, teams, updateMatch }) {
@@ -8,10 +8,28 @@ function FootballScore({ match, teams, updateMatch }) {
   const [type, setType] = useState('goal')
   const [teamId, setTeamId] = useState('')
   const [player, setPlayer] = useState('')
+  const [playerIn, setPlayerIn] = useState('')
 
   const teamName = (id) => teams.find((t) => t.id === id)?.name || 'unknown'
   const team = teams.find((t) => t.id === Number(teamId))
   const sorted = [...match.events].sort((a, b) => a.minute - b.minute)
+
+  // players still on pitch (after subs and red cards)
+  function onPitch(tid) {
+    let list = [...(teams.find((t) => t.id === tid)?.players || [])]
+    sorted.forEach((ev) => {
+      if (ev.teamId !== tid) return
+      if (ev.type === 'substitution') list = list.filter((p) => p !== ev.player).concat(ev.playerIn)
+      if (ev.type === 'red card') list = list.filter((p) => p !== ev.player)
+    })
+    return list
+  }
+
+  // subs not used yet
+  function bench(tid) {
+    const used = match.events.filter((ev) => ev.type === 'substitution').map((ev) => ev.playerIn)
+    return (teams.find((t) => t.id === tid)?.subs || []).filter((p) => !used.includes(p))
+  }
 
   // which team gets the goal (own goal goes to other team)
   function goalFor(ev) {
@@ -23,8 +41,10 @@ function FootballScore({ match, teams, updateMatch }) {
   function addEvent(e) {
     e.preventDefault()
     if (!minute || !teamId || !player) return alert('fill minute, team and player')
+    if (type === 'substitution' && !playerIn) return alert('select player coming in')
 
-    const ev = { id: Date.now(), minute: Number(minute), type, teamId: Number(teamId), player }
+    const ev = { id: match.events.length + 1, minute: Number(minute), type, teamId: Number(teamId), player }
+    if (type === 'substitution') ev.playerIn = playerIn
     const changes = { events: [...match.events, ev] }
     const g = goalFor(ev)
     if (g === match.teamA) changes.scoreA = match.scoreA + 1
@@ -32,10 +52,11 @@ function FootballScore({ match, teams, updateMatch }) {
     updateMatch(changes)
     setMinute('')
     setPlayer('')
+    setPlayerIn('')
   }
 
   function deleteEvent(ev) {
-    const changes = { events: match.events.filter((x) => x.id !== ev.id) }
+    const changes = { events: match.events.filter((x) => x !== ev) }
     const g = goalFor(ev)
     if (g === match.teamA) changes.scoreA = match.scoreA - 1
     if (g === match.teamB) changes.scoreB = match.scoreB - 1
@@ -52,17 +73,25 @@ function FootballScore({ match, teams, updateMatch }) {
               <option key={t} value={t}>{t}</option>
             ))}
           </select>
-          <select value={teamId} onChange={(e) => { setTeamId(e.target.value); setPlayer('') }}>
+          <select value={teamId} onChange={(e) => { setTeamId(e.target.value); setPlayer(''); setPlayerIn('') }}>
             <option value="">Team</option>
             <option value={match.teamA}>{teamName(match.teamA)}</option>
             <option value={match.teamB}>{teamName(match.teamB)}</option>
           </select>
           <select value={player} onChange={(e) => setPlayer(e.target.value)}>
-            <option value="">Player</option>
-            {(team?.players || []).map((p) => (
+            <option value="">{type === 'substitution' ? 'Player out' : 'Player'}</option>
+            {(team ? onPitch(team.id) : []).map((p) => (
               <option key={p} value={p}>{p}</option>
             ))}
           </select>
+          {type === 'substitution' && (
+            <select value={playerIn} onChange={(e) => setPlayerIn(e.target.value)}>
+              <option value="">Player in</option>
+              {(team ? bench(team.id) : []).map((p) => (
+                <option key={p} value={p}>{p}</option>
+              ))}
+            </select>
+          )}
           <button type="submit">Add</button>
         </form>
       )}
@@ -70,9 +99,9 @@ function FootballScore({ match, teams, updateMatch }) {
       <h3>Match events</h3>
       {sorted.length === 0 && <p>nothing yet</p>}
       <ul>
-        {sorted.map((ev) => (
-          <li key={ev.id}>
-            {ev.minute}' {ev.type} - {ev.player} ({teamName(ev.teamId)})
+        {sorted.map((ev, i) => (
+          <li key={i}>
+            {ev.minute}' {ev.type} - {ev.type === 'substitution' ? `out ${ev.player}, in ${ev.playerIn}` : ev.player} ({teamName(ev.teamId)})
             {match.status === 'live' && <button onClick={() => deleteEvent(ev)}>x</button>}
           </li>
         ))}

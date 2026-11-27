@@ -9,30 +9,37 @@ export const teams = [
   {
     id: 1, name: 'FC Barcelona', shortName: 'FCB', sport: 'football', leagueId: 1,
     players: ['Joan Garcia', 'Jules Kounde', 'Pau Cubarsi', 'Ronald Araujo', 'Alejandro Balde', 'Frenkie de Jong', 'Pedri', 'Gavi', 'Lamine Yamal', 'Raphinha', 'Robert Lewandowski'],
+    subs: ['Wojciech Szczesny', 'Eric Garcia', 'Fermin Lopez', 'Ferran Torres'],
   },
   {
     id: 2, name: 'Real Madrid', shortName: 'RMA', sport: 'football', leagueId: 1,
     players: ['Thibaut Courtois', 'Trent Alexander-Arnold', 'Dean Huijsen', 'Antonio Rudiger', 'Ferland Mendy', 'Federico Valverde', 'Aurelien Tchouameni', 'Jude Bellingham', 'Arda Guler', 'Vinicius Jr', 'Kylian Mbappe'],
+    subs: ['Andriy Lunin', 'Eduardo Camavinga', 'Rodrygo', 'Gonzalo Garcia'],
   },
   {
     id: 3, name: 'Atletico Madrid', shortName: 'ATM', sport: 'football', leagueId: 1,
     players: ['Jan Oblak', 'Nahuel Molina', 'Jose Gimenez', 'Robin Le Normand', 'David Hancko', 'Koke', 'Pablo Barrios', 'Conor Gallagher', 'Giuliano Simeone', 'Alexander Sorloth', 'Julian Alvarez'],
+    subs: ['Juan Musso', 'Marcos Llorente', 'Thiago Almada', 'Antoine Griezmann'],
   },
   {
     id: 4, name: 'Manchester United', shortName: 'MUN', sport: 'football', leagueId: 2,
     players: ['Senne Lammens', 'Diogo Dalot', 'Matthijs de Ligt', 'Lisandro Martinez', 'Luke Shaw', 'Casemiro', 'Kobbie Mainoo', 'Bruno Fernandes', 'Bryan Mbeumo', 'Matheus Cunha', 'Benjamin Sesko'],
+    subs: ['Altay Bayindir', 'Harry Maguire', 'Manuel Ugarte', 'Mason Mount'],
   },
   {
     id: 5, name: 'Manchester City', shortName: 'MCI', sport: 'football', leagueId: 2,
     players: ['Gianluigi Donnarumma', 'Rico Lewis', 'Ruben Dias', 'John Stones', 'Josko Gvardiol', 'Rodri', 'Bernardo Silva', 'Tijjani Reijnders', 'Phil Foden', 'Jeremy Doku', 'Erling Haaland'],
+    subs: ['James Trafford', 'Nathan Ake', 'Mateo Kovacic', 'Omar Marmoush'],
   },
   {
     id: 6, name: 'Liverpool', shortName: 'LIV', sport: 'football', leagueId: 2,
     players: ['Alisson', 'Jeremie Frimpong', 'Ibrahima Konate', 'Virgil van Dijk', 'Andy Robertson', 'Ryan Gravenberch', 'Alexis Mac Allister', 'Dominik Szoboszlai', 'Florian Wirtz', 'Mohamed Salah', 'Alexander Isak'],
+    subs: ['Giorgi Mamardashvili', 'Joe Gomez', 'Curtis Jones', 'Hugo Ekitike'],
   },
   {
     id: 7, name: 'Arsenal', shortName: 'ARS', sport: 'football', leagueId: 2,
     players: ['David Raya', 'Ben White', 'William Saliba', 'Gabriel', 'Riccardo Calafiori', 'Declan Rice', 'Martin Zubimendi', 'Martin Odegaard', 'Bukayo Saka', 'Gabriel Martinelli', 'Viktor Gyokeres'],
+    subs: ['Kepa Arrizabalaga', 'Jurrien Timber', 'Mikel Merino', 'Eberechi Eze'],
   },
   {
     id: 8, name: 'India', shortName: 'IND', sport: 'cricket', leagueId: 3,
